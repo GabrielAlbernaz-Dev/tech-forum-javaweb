@@ -1,0 +1,21 @@
+.bg-blue {
+    background-color: #105ab2;
+}
+
+.dropdown-menu.bg-dark .dropdown-item {
+    color: #ffffff;;
+}
+
+.dropdown-menu.bg-dark .dropdown-item .bi {
+    margin: 0 5px;
+}
+
+a.dropdown-item:focus, a.dropdown-item:hover {
+    background-color: transparent!important;
+    opacity: .8!important;
+}
+
+.navbar-brand {
+    line-height: 16px;
+    margin-right: 25px;
+}
