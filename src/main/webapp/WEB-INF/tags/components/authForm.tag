@@ -57,7 +57,7 @@
                     />
                 </div>
             </c:forEach>
-            <button type="submit" class="btn btn-primary mt-3 w-100">${submitLabel}</button>
+            <button type="submit" class="btn btn-blue mt-3 w-100">${submitLabel}</button>
         </form>
     </div>
 </section>
