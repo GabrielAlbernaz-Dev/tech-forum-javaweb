@@ -1,11 +1,11 @@
 package com.gabrielalbernazdev.techforumjavaweb.web.viewobject;
 
 public class FormField {
-    private String label;
-    private String type;
-    private String id;
-    private String name;
-    private boolean required;
+    private final String label;
+    private final String type;
+    private final String id;
+    private final String name;
+    private final boolean required;
     private String value;
 
     public FormField(String label, String type, String id, String name, boolean required) {
