@@ -17,7 +17,7 @@
 </head>
 <body>
     <ui:header />
-    <main class="bg-dark" style="min-height: 90vh">
+    <main class="bg-dark py-5 vh-100">
         <div class="container">
             <jsp:doBody />
         </div>

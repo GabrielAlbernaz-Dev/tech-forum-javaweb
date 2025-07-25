@@ -1,7 +1,9 @@
-package com.gabrielalbernazdev.techforumjavaweb.hello;
+package com.gabrielalbernazdev.techforumjavaweb.auth.servlet;
 
+import com.gabrielalbernazdev.techforumjavaweb.auth.service.AuthService;
 import com.gabrielalbernazdev.techforumjavaweb.config.component.AppComponent;
 import com.gabrielalbernazdev.techforumjavaweb.util.constant.Constants;
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,9 +13,9 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class HelloServlet extends HttpServlet {
+public class RegisterServlet extends HttpServlet {
     @Inject
-    HelloService service;
+    AuthService authService;
 
     @Override
     public void init() throws ServletException {
@@ -24,8 +26,14 @@ public class HelloServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/register.jsp");
+        dispatcher.forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
-        out.println(service.sayHello());
+        out.println(authService.register());
     }
 }

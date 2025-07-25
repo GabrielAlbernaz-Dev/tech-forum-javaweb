@@ -4,6 +4,8 @@
 
 <ui:baseLayout title="Tech Forum">
     <jsp:body>
-        <h1>Hello World!</h1>
+        <div id="auth-content" class="min-vh-50 d-flex align-items-center justify-content-center">
+            <jsp:include page="/WEB-INF/views/login.jsp" />
+        </div>
     </jsp:body>
 </ui:baseLayout>

@@ -19,3 +19,18 @@ a.dropdown-item:focus, a.dropdown-item:hover {
     line-height: 16px;
     margin-right: 25px;
 }
+
+#form-border {
+    width: 50%;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.min-vh-50 {
+    min-height: 50vh;
+}
+
+@media screen and (max-width: 768px) {
+    #form-border {
+        width: 100%;
+    }
+}

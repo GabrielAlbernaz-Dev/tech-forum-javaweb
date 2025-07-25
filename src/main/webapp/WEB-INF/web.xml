@@ -7,11 +7,19 @@
         <listener-class>com.gabrielalbernazdev.techforumjavaweb.config.initializer.DaggerInitializer</listener-class>
     </listener>
     <servlet>
-        <servlet-name>HelloServlet</servlet-name>
-        <servlet-class>com.gabrielalbernazdev.techforumjavaweb.hello.HelloServlet</servlet-class>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.gabrielalbernazdev.techforumjavaweb.auth.servlet.LoginServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>HelloServlet</servlet-name>
-        <url-pattern>/hello</url-pattern>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/auth/login</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>com.gabrielalbernazdev.techforumjavaweb.auth.servlet.RegisterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/auth/register</url-pattern>
     </servlet-mapping>
 </web-app>
