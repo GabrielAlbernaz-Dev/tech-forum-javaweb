@@ -1,6 +1,7 @@
 package com.gabrielalbernazdev.techforumjavaweb.user.domain.model;
 
 import com.gabrielalbernazdev.techforumjavaweb.common.domain.vo.Email;
+import com.gabrielalbernazdev.techforumjavaweb.user.domain.vo.Password;
 import com.gabrielalbernazdev.techforumjavaweb.user.domain.vo.Username;
 
 import java.time.LocalDateTime;
@@ -11,17 +12,17 @@ public class User {
     private final UUID id;
     private final Username username;
     private final Email email;
-    private final String password;
+    private final Password password;
     private final LocalDateTime createdAt;
     private final Set<Role> roles;
     private final Set<UUID> followers;
     private final Set<UUID> following;
 
-    public User(
+    private User(
         final UUID id,
         final String username,
         final String email,
-        final String password,
+        final Password password,
         final LocalDateTime createdAt,
         final Set<Role> roles,
         final Set<UUID> followers,
@@ -29,19 +30,19 @@ public class User {
         this.id = Objects.requireNonNull(id, "ID cannot be null");
         this.username = Username.of(username);
         this.email = Email.of(email);
-        this.password = password;
+        this.password = Objects.requireNonNull(password, "Password cannot be null");
         this.createdAt = Objects.requireNonNull(createdAt, "CreatedAt cannot be null");
         this.roles = Set.copyOf(roles);
         this.followers = new HashSet<>(followers);
         this.following = new HashSet<>(following);
     }
 
-    public static User createNew(String username, String email, String passwordHash, Set<Role> roles) {
+    public static User create(String username, String email, String plainPassword, Set<Role> roles) {
         return new User(
                 UUID.randomUUID(),
                 username,
                 email,
-                passwordHash,
+                Password.fromPlain(plainPassword),
                 LocalDateTime.now(),
                 roles,
                 new HashSet<>(),
@@ -62,7 +63,7 @@ public class User {
                 id,
                 username,
                 email,
-                passwordHash,
+                Password.fromHash(passwordHash),
                 createdAt,
                 roles,
                 followers,
@@ -122,6 +123,10 @@ public class User {
         return following;
     }
 
+    public Password getPassword() {
+        return password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -140,7 +145,6 @@ public class User {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
                 ", createdAt=" + createdAt +
                 ", roles=" + roles +
                 ", followers=" + followers +
