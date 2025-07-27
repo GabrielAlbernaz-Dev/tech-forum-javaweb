@@ -2,6 +2,7 @@ package com.gabrielalbernazdev.techforumjavaweb.auth.servlet;
 
 import com.gabrielalbernazdev.techforumjavaweb.auth.service.AuthService;
 import com.gabrielalbernazdev.techforumjavaweb.config.component.AppComponent;
+import com.gabrielalbernazdev.techforumjavaweb.user.dto.UserRequest;
 import com.gabrielalbernazdev.techforumjavaweb.util.constant.Constants;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 public class RegisterServlet extends HttpServlet {
     @Inject
@@ -31,9 +33,20 @@ public class RegisterServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
-        out.println(authService.register());
+        UserRequest userRequest = new UserRequest(
+            req.getParameter("username"),
+            req.getParameter("password"),
+            req.getParameter("email")
+        );
+
+        try {
+            String register = authService.register(userRequest);
+            out.println(register);
+        } catch (SQLException e) {
+            out.print("Error to register user");
+        }
     }
 }
