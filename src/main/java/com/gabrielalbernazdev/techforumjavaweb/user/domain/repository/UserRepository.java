@@ -5,10 +5,13 @@ import com.gabrielalbernazdev.techforumjavaweb.user.domain.model.User;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 public interface UserRepository {
-    Set<Role> findRoles(Connection connection, User user) throws SQLException;
-    void save(Connection connection, User user);
-    void saveUserRoles(Connection connection, Set<Role> roles);
+    Optional<User> findById(Connection connection, UUID id) throws SQLException;
+    Set<Role> findRolesByUserId(Connection connection, UUID userId) throws SQLException;
+    void save(Connection connection, User user) throws SQLException;
+    void saveUserRoles(Connection connection, User user) throws SQLException;
 }

@@ -2,6 +2,8 @@ package com.gabrielalbernazdev.techforumjavaweb.user.domain.vo;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
+
+import com.gabrielalbernazdev.techforumjavaweb.user.domain.exception.InvalidPasswordException;
 import org.mindrot.jbcrypt.BCrypt;
 
 public final class Password {
@@ -11,10 +13,10 @@ public final class Password {
             "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"
     );
 
-    private final String hash;
+    private final String value;
 
     private Password(String hash) {
-        this.hash = Objects.requireNonNull(hash, "Password hash cannot be null");
+        this.value = Objects.requireNonNull(hash, "Password hash cannot be null");
     }
 
     public static Password fromPlain(String plainPassword) {
@@ -28,24 +30,24 @@ public final class Password {
     }
 
     public boolean matches(String plainPassword) {
-        return BCrypt.checkpw(plainPassword, this.hash);
+        return BCrypt.checkpw(plainPassword, this.value);
     }
 
-    public String getHash() {
-        return hash;
+    public String getValue() {
+        return value;
     }
 
     private static void validatePlain(String value) {
         Objects.requireNonNull(value, "Password cannot be null");
         String trimmed = value.trim();
         if (trimmed.length() < MIN_LENGTH) {
-            throw new IllegalArgumentException("Password must be at least " + MIN_LENGTH + " characters");
+            throw new InvalidPasswordException("Password must be at least " + MIN_LENGTH + " characters");
         }
         if (trimmed.length() > MAX_LENGTH) {
-            throw new IllegalArgumentException("Password exceeds maximum length (" + MAX_LENGTH + ")");
+            throw new InvalidPasswordException("Password exceeds maximum length (" + MAX_LENGTH + ")");
         }
         if (!STRONG_PASSWORD_PATTERN.matcher(trimmed).matches()) {
-            throw new IllegalArgumentException("Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character");
+            throw new InvalidPasswordException("Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character");
         }
     }
 
@@ -58,12 +60,12 @@ public final class Password {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Password password = (Password) o;
-        return Objects.equals(hash, password.hash);
+        return Objects.equals(value, password.value);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(hash);
+        return Objects.hashCode(value);
     }
 }
 

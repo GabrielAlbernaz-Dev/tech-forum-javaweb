@@ -33,13 +33,13 @@ public final class Email {
 
         String trimmed = value.trim();
         if (trimmed.isEmpty()) {
-            throw new IllegalArgumentException("Email cannot be empty");
+            throw new InvalidEmailException("Email cannot be empty");
         }
         if (trimmed.length() > 254) {
-            throw new IllegalArgumentException("Email exceeds maximum length (254 chars)");
+            throw new InvalidEmailException("Email exceeds maximum length (254 chars)");
         }
         if (!RFC_5322_PATTERN.matcher(trimmed).matches()) {
-            throw new IllegalArgumentException("Invalid email format according to RFC 5322");
+            throw new InvalidEmailException("Invalid email format according to RFC 5322");
         }
         return trimmed.toLowerCase();
     }

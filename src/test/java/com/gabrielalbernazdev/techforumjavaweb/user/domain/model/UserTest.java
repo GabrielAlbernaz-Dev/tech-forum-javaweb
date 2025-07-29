@@ -1,7 +1,6 @@
 package com.gabrielalbernazdev.techforumjavaweb.user.domain.model;
 
 import com.gabrielalbernazdev.techforumjavaweb.common.domain.vo.Email;
-import com.gabrielalbernazdev.techforumjavaweb.user.domain.vo.Password;
 import com.gabrielalbernazdev.techforumjavaweb.user.domain.vo.Username;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +15,7 @@ public class UserTest {
     private UUID userId;
     private Username username;
     private Email email;
-    private String plainPassword;
+    private String passwordHash;
     private LocalDateTime createdAt;
     private Set<Role> roles;
     private Set<UUID> followers;
@@ -25,9 +24,9 @@ public class UserTest {
     @BeforeEach
     void setUp() {
         userId = UUID.randomUUID();
-        username = Username.of("testusername");
-        email = Email.of("test@example.com");
-        plainPassword = "StrongP@ssw0rd";
+        username = Username.of("John_Doe2025");
+        email = Email.of("johbdoe2025@example.com");
+        passwordHash = "hashedPassword123";
         createdAt = LocalDateTime.now();
         roles = Set.of(Role.create("ROLE_USER"));
         followers = Set.of(UUID.randomUUID());
@@ -36,30 +35,42 @@ public class UserTest {
 
     @Test
     void createShouldCreateUserWithValidAttributes() {
-        User user = User.create(username.getValue(), email.getValue(), plainPassword, roles);
+        User user = User.create(username.getValue(), email.getValue(), passwordHash, roles);
 
         assertNotNull(user.getId());
         assertEquals(username, user.getUsername());
         assertEquals(email, user.getEmail());
         assertNotNull(user.getCreatedAt());
-        assertTrue(user.getPassword().matches(plainPassword));
+        assertEquals(roles, user.getRoles());
+        assertEquals(0, user.getFollowers().count());
+        assertTrue(user.getFollowing().isEmpty());
     }
 
     @Test
-    void reconstructShouldRestoreUserFromHash() {
-        Password password = Password.fromPlain(plainPassword);
-        User user = User.reconstruct(userId, username.getValue(), email.getValue(), password.getHash(), createdAt, roles, followers, following);
+    void reconstructShouldCreateUserWithProvidedAttributes() {
+        User user = User.reconstruct(
+            userId,
+            username.getValue(),
+            email.getValue(),
+            passwordHash,
+            createdAt,
+            roles,
+            followers,
+            following
+        );
 
         assertEquals(userId, user.getId());
         assertEquals(username, user.getUsername());
         assertEquals(email, user.getEmail());
         assertEquals(createdAt, user.getCreatedAt());
-        assertTrue(user.getPassword().matches(plainPassword));
+        assertEquals(roles, user.getRoles());
+        assertEquals(followers.size(), user.getFollowers().count());
+        assertEquals(following, user.getFollowing());
     }
 
     @Test
     void followShouldReturnSuccessWhenAddingNewUser() {
-        User user = User.create(username.getValue(), email.getValue(), plainPassword, roles);
+        User user = User.create(username.getValue(), email.getValue(), passwordHash, roles);
         UUID userIdToFollow = UUID.randomUUID();
 
         FollowStatus status = user.follow(userIdToFollow);
@@ -70,7 +81,7 @@ public class UserTest {
 
     @Test
     void followShouldReturnCannotFollowSelfWhenFollowingSelf() {
-        User user = User.create(username.getValue(), email.getValue(), plainPassword, roles);
+        User user = User.create(username.getValue(), email.getValue(), passwordHash, roles);
 
         FollowStatus status = user.follow(user.getId());
 
@@ -85,7 +96,7 @@ public class UserTest {
             userId,
             username.getValue(),
             email.getValue(),
-            plainPassword,
+            passwordHash,
             createdAt,
             roles,
             followers,
@@ -105,7 +116,7 @@ public class UserTest {
             userId,
             username.getValue(),
             email.getValue(),
-            plainPassword,
+            passwordHash,
             createdAt,
             roles,
             followers,
@@ -121,7 +132,7 @@ public class UserTest {
 
     @Test
     void unfollowShouldReturnCannotUnfollowSelfWhenUnfollowingSelf() {
-        User user = User.create(username.getValue(), email.getValue(), plainPassword, roles);
+        User user = User.create(username.getValue(), email.getValue(), passwordHash, roles);
 
         FollowStatus status = user.unfollow(user.getId());
 
@@ -130,7 +141,7 @@ public class UserTest {
 
     @Test
     void unfollowShouldReturnAlreadyUnfollowingWhenUserNotFollowed() {
-        User user = User.create(username.getValue(), email.getValue(), plainPassword, roles);
+        User user = User.create(username.getValue(), email.getValue(), passwordHash, roles);
         UUID userIdToUnfollow = UUID.randomUUID();
 
         FollowStatus status = user.unfollow(userIdToUnfollow);

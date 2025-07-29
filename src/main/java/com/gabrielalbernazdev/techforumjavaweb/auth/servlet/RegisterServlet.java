@@ -45,7 +45,7 @@ public class RegisterServlet extends HttpServlet {
             String register = authService.register(userRequest);
             out.println(register);
         } catch (Exception e) {
-            out.print("Error to register user");
+            out.print("Error to register user" + e.getMessage());
         }
     }
 }

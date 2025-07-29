@@ -1,7 +1,9 @@
 package com.gabrielalbernazdev.techforumjavaweb.config.module;
 
 import com.gabrielalbernazdev.techforumjavaweb.auth.service.AuthService;
+import com.gabrielalbernazdev.techforumjavaweb.user.domain.repository.RoleRepository;
 import com.gabrielalbernazdev.techforumjavaweb.user.domain.repository.UserRepository;
+import com.gabrielalbernazdev.techforumjavaweb.user.service.RoleService;
 import com.gabrielalbernazdev.techforumjavaweb.user.service.UserService;
 import dagger.Module;
 import dagger.Provides;
@@ -19,7 +21,13 @@ public class ServiceModule {
 
     @Provides
     @Singleton
-    public UserService provideUserService(DataSource dataSource, UserRepository repository) {
-        return new UserService(dataSource, repository);
+    public RoleService provideRoleService(DataSource dataSource, RoleRepository repository) {
+        return new RoleService(dataSource, repository);
+    }
+
+    @Provides
+    @Singleton
+    public UserService provideUserService(DataSource dataSource, UserRepository repository, RoleService roleService) {
+        return new UserService(dataSource, repository, roleService);
     }
 }

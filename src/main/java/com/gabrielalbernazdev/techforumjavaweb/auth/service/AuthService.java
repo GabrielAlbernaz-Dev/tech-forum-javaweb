@@ -1,6 +1,5 @@
 package com.gabrielalbernazdev.techforumjavaweb.auth.service;
 
-import com.gabrielalbernazdev.techforumjavaweb.config.database.UnitOfWork;
 import com.gabrielalbernazdev.techforumjavaweb.user.domain.model.Role;
 import com.gabrielalbernazdev.techforumjavaweb.user.domain.model.User;
 import com.gabrielalbernazdev.techforumjavaweb.user.dto.UserRequest;
@@ -13,8 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AuthService {
-    private final UserService userService;
     private final DataSource dataSource;
+    private final UserService userService;
 
     @Inject
     public AuthService(DataSource dataSource, UserService userService) {
