@@ -15,7 +15,7 @@ public class DataSourceModule {
     @Singleton
     public DataSource provideDataSource() {
         HikariConfig config = new HikariConfig();
-        String dbFilePath = String.format("%s/database.sqlite", new File("src/main/resources").getAbsolutePath());
+        String dbFilePath = String.format("%s/database.db", new File("src/main/resources").getAbsolutePath());
 
         config.setJdbcUrl("jdbc:sqlite:" + dbFilePath);
 

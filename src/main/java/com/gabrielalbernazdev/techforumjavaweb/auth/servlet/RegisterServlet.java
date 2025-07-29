@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
 
 public class RegisterServlet extends HttpServlet {
     @Inject
@@ -38,14 +37,14 @@ public class RegisterServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         UserRequest userRequest = new UserRequest(
             req.getParameter("username"),
-            req.getParameter("password"),
-            req.getParameter("email")
+            req.getParameter("email"),
+            req.getParameter("password")
         );
 
         try {
             String register = authService.register(userRequest);
             out.println(register);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             out.print("Error to register user");
         }
     }
