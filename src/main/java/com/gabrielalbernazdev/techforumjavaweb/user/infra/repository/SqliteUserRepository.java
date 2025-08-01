@@ -113,7 +113,7 @@ public class SqliteUserRepository implements UserRepository {
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             for (Role role : roles) {
                 pstmt.setString(1, user.getId().toString());
-                pstmt.setString(2, role.getName());
+                pstmt.setString(2, role.getId().toString());
                 pstmt.addBatch();
             }
             pstmt.executeBatch();

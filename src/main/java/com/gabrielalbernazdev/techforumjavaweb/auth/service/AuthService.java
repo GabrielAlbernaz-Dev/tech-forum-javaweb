@@ -25,7 +25,7 @@ public class AuthService {
         return "Login successful";
     }
 
-    public String register(UserRequest userRequest) throws SQLException {
+    public User register(UserRequest userRequest) throws SQLException {
         Set<Role> roles = new HashSet<>();
         roles.add(Role.create("USER"));
 
@@ -38,6 +38,6 @@ public class AuthService {
 
         userService.saveWithRoles(user);
 
-        return "Registration successful";
+        return user;
     }
 }

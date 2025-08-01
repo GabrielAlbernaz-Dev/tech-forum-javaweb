@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class LoginServlet extends HttpServlet {
     @Inject
@@ -32,13 +31,6 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/html");
-        PrintWriter out = resp.getWriter();
-        out.println(authService.login());
-        try {
 
-        } catch(Exception e) {
-
-        }
     }
 }

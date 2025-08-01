@@ -50,7 +50,7 @@ public class UserService {
 
         try(final UnitOfWork uow = new UnitOfWork(dataSource)) {
             try {
-                save(user);
+                save(userToSave);
                 saveUserRoles(userToSave);
                 uow.commit();
             } catch (SQLException e) {

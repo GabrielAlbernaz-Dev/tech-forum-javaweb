@@ -1,9 +1,12 @@
 package com.gabrielalbernazdev.techforumjavaweb.auth.servlet;
 
 import com.gabrielalbernazdev.techforumjavaweb.auth.service.AuthService;
+import com.gabrielalbernazdev.techforumjavaweb.common.exception.DomainException;
 import com.gabrielalbernazdev.techforumjavaweb.config.component.AppComponent;
+import com.gabrielalbernazdev.techforumjavaweb.user.domain.model.User;
 import com.gabrielalbernazdev.techforumjavaweb.user.dto.UserRequest;
 import com.gabrielalbernazdev.techforumjavaweb.util.constant.Constants;
+import com.gabrielalbernazdev.techforumjavaweb.util.infra.ServletUtil;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +15,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class RegisterServlet extends HttpServlet {
     @Inject
@@ -32,9 +34,7 @@ public class RegisterServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        resp.setContentType("text/html");
-        PrintWriter out = resp.getWriter();
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         UserRequest userRequest = new UserRequest(
             req.getParameter("username"),
             req.getParameter("email"),
@@ -42,10 +42,13 @@ public class RegisterServlet extends HttpServlet {
         );
 
         try {
-            String register = authService.register(userRequest);
-            out.println(register);
+            User registeredUser = authService.register(userRequest);
+            req.getSession().setAttribute(Constants.USER_SESSION_ATTRIBUTE, registeredUser);
+            ServletUtil.redirect(req, resp, "/");
+        } catch (DomainException de) {
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         } catch (Exception e) {
-            out.print("Error to register user" + e.getMessage());
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
 }

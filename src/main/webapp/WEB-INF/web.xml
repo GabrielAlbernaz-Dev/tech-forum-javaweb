@@ -6,6 +6,22 @@
     <listener>
         <listener-class>com.gabrielalbernazdev.techforumjavaweb.config.initializer.DaggerInitializer</listener-class>
     </listener>
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.gabrielalbernazdev.techforumjavaweb.auth.filter.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <servlet>
+        <servlet-name>IndexServlet</servlet-name>
+        <servlet-class>com.gabrielalbernazdev.techforumjavaweb.common.servlet.IndexServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>IndexServlet</servlet-name>
+        <url-pattern>/index</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>com.gabrielalbernazdev.techforumjavaweb.auth.servlet.LoginServlet</servlet-class>

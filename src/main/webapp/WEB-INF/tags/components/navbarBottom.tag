@@ -1,6 +1,6 @@
 <%@ tag description="Navbar Bottom Component" pageEncoding="UTF-8" %>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-blue">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
         <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent2" aria-controls="navbarSupportedContent2" aria-expanded="false" aria-label="Toggle navigation" style="font-size:0.5rem">
             <span class="navbar-toggler-icon"></span>

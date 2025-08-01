@@ -3,9 +3,5 @@
 <%@ taglib prefix="comp" tagdir="/WEB-INF/tags/components" %>
 
 <ui:baseLayout title="Tech Forum">
-    <jsp:body>
-        <div id="auth-content" class="min-vh-50 d-flex align-items-center justify-content-center">
-            <jsp:include page="/WEB-INF/views/login.jsp" />
-        </div>
-    </jsp:body>
+    <h1>Home</h1>
 </ui:baseLayout>
