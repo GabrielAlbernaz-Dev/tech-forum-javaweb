@@ -19,11 +19,13 @@
     <ui:header />
     <main class="bg-dark py-5 vh-100">
         <div class="container">
+            <div id="alert-container"></div>
             <jsp:doBody />
         </div>
     </main>
     <ui:footer />
     <script src="https://unpkg.com/htmx.org@2.0.3/dist/htmx.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script type="module" src="${pageContext.request.contextPath}/resources/js/app.js"></script>
 </body>
 </html>

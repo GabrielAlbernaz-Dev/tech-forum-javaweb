@@ -1,6 +1,7 @@
 package com.gabrielalbernazdev.techforumjavaweb.auth.servlet;
 
 import com.gabrielalbernazdev.techforumjavaweb.auth.service.AuthService;
+import com.gabrielalbernazdev.techforumjavaweb.common.domain.vo.ErrorType;
 import com.gabrielalbernazdev.techforumjavaweb.common.exception.DomainException;
 import com.gabrielalbernazdev.techforumjavaweb.config.component.AppComponent;
 import com.gabrielalbernazdev.techforumjavaweb.user.domain.model.User;
@@ -46,9 +47,11 @@ public class RegisterServlet extends HttpServlet {
             req.getSession().setAttribute(Constants.USER_SESSION_ATTRIBUTE, registeredUser);
             ServletUtil.redirect(req, resp, "/");
         } catch (DomainException de) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            resp.setStatus(HttpServletResponse.SC_UNPROCESSABLE_CONTENT);
+            ServletUtil.setErrorHeader(resp, ErrorType.VALIDATION.toString(), de.getMessage());
         } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            ServletUtil.setErrorHeader(resp, ErrorType.GENERIC.toString(), e.getMessage());
         }
     }
 }
