@@ -1,5 +1,6 @@
 package com.gabrielalbernazdev.techforumjavaweb.auth.service;
 
+import com.gabrielalbernazdev.techforumjavaweb.common.exception.DomainException;
 import com.gabrielalbernazdev.techforumjavaweb.user.domain.model.Role;
 import com.gabrielalbernazdev.techforumjavaweb.user.domain.model.User;
 import com.gabrielalbernazdev.techforumjavaweb.user.dto.UserRequest;
@@ -21,8 +22,15 @@ public class AuthService {
         this.userService = userService;
     }
 
-    public String login() {
-        return "Login successful";
+    public User login(UserRequest userRequest) throws SQLException {
+       User loggedUser = userService.findUserByEmail(userRequest.email());
+       boolean passwordMatches = loggedUser.getPassword().matches(userRequest.password());
+
+       if(!passwordMatches) {
+           throw new DomainException("Invalid credentials. Please check your email and password.");
+       }
+
+       return loggedUser;
     }
 
     public User register(UserRequest userRequest) throws SQLException {

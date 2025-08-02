@@ -8,7 +8,6 @@ import com.gabrielalbernazdev.techforumjavaweb.user.domain.model.User;
 import com.gabrielalbernazdev.techforumjavaweb.user.dto.UserRequest;
 import com.gabrielalbernazdev.techforumjavaweb.util.constant.Constants;
 import com.gabrielalbernazdev.techforumjavaweb.util.infra.ServletUtil;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +28,7 @@ public class RegisterServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ServletUtil.forward(req, resp, Constants.VIEWS_PATH + "/register.jsp");
     }
 

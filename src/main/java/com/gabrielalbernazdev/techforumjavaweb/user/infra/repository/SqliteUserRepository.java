@@ -18,43 +18,29 @@ import java.util.UUID;
 public class SqliteUserRepository implements UserRepository {
     @Override
     public Optional<User> findById(Connection connection, UUID id) throws SQLException {
-        String sql = "SELECT id, username, email FROM " + Table.USERS + " WHERE id = ?";
+        String sql = "SELECT id, username, email, password, created_at FROM " + Table.USERS + " WHERE id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, id.toString());
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) {
-                    return Optional.empty();
-                }
+            return extractUser(connection, stmt);
+        }
+    }
 
-                UUID userId = UUID.fromString(rs.getString("id"));
-                String username = rs.getString("username");
-                String email = rs.getString("email");
-                String password = rs.getString("password");
-                LocalDateTime createdAt = rs.getTimestamp("created_at").toLocalDateTime();
+    @Override
+    public Optional<User> findByEmail(Connection connection, String email) throws SQLException {
+        String sql = "SELECT id, username, email, password, created_at FROM " + Table.USERS + " WHERE email = ?";
 
-                Set<Role> roles = findRolesByUserId(connection, userId);
-
-                User user = User.reconstruct(
-                    userId,
-                    username,
-                    email,
-                    password,
-                    createdAt,
-                    roles,
-                    new HashSet<>(),
-                    new HashSet<>()
-                );
-
-                return Optional.of(user);
-            }
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            return extractUser(connection, stmt);
         }
     }
 
     @Override
     public Set<Role> findRolesByUserId(Connection connection, UUID userId) throws SQLException {
-        String sql = "SELECT u.id, u.username FROM " + Table.USERS.as("u") +
+        String sql = "SELECT u.id, r.name FROM " + Table.USERS.as("u") +
                     " JOIN " + Table.USER_ROLES.as("ur") + " ON u.id = ur.user_id" +
+                    " JOIN " + Table.ROLES.as("r") + " ON ur.role_id = r.id" +
                     " WHERE u.id = ?";
 
         Set<Role> roles = new HashSet<>();
@@ -117,6 +103,36 @@ public class SqliteUserRepository implements UserRepository {
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
+        }
+    }
+
+    private Optional<User> extractUser(Connection connection, PreparedStatement stmt) throws SQLException {
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (!rs.next()) {
+                return Optional.empty();
+            }
+
+            UUID userId = UUID.fromString(rs.getString("id"));
+            String username = rs.getString("username");
+            String email = rs.getString("email");
+            String password = rs.getString("password");
+            String createdAt = rs.getString("created_at");
+            LocalDateTime createdAtParsed = LocalDateTime.parse(createdAt);
+
+            Set<Role> roles = findRolesByUserId(connection, userId);
+
+            User user = User.reconstruct(
+                    userId,
+                    username,
+                    email,
+                    password,
+                    createdAtParsed,
+                    roles,
+                    new HashSet<>(),
+                    new HashSet<>()
+            );
+
+            return Optional.of(user);
         }
     }
 }

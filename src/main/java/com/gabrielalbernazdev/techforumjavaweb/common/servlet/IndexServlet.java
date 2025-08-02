@@ -1,5 +1,6 @@
 package com.gabrielalbernazdev.techforumjavaweb.common.servlet;
 
+import com.gabrielalbernazdev.techforumjavaweb.util.infra.ServletUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,7 +11,7 @@ import java.io.IOException;
 public class IndexServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        ServletUtil.forward(req, resp, "/index.jsp");
     }
 }

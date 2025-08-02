@@ -1,5 +1,6 @@
 package com.gabrielalbernazdev.techforumjavaweb.user.service;
 
+import com.gabrielalbernazdev.techforumjavaweb.common.exception.DomainException;
 import com.gabrielalbernazdev.techforumjavaweb.config.database.UnitOfWork;
 import com.gabrielalbernazdev.techforumjavaweb.user.domain.model.Role;
 import com.gabrielalbernazdev.techforumjavaweb.user.domain.model.User;
@@ -20,6 +21,11 @@ public class UserService {
         this.dataSource = dataSource;
         this.repository = repository;
         this.rolesService = rolesService;
+    }
+
+    public User findUserByEmail(String email) throws SQLException {
+        return repository.findByEmail(dataSource.getConnection(), email)
+                    .orElseThrow(() -> new DomainException("User does not exists with the email: " + email));
     }
 
     public Set<Role> findRolesByUserId(UUID userId) throws SQLException {

@@ -11,6 +11,7 @@ import java.util.UUID;
 
 public interface UserRepository {
     Optional<User> findById(Connection connection, UUID id) throws SQLException;
+    Optional<User> findByEmail(Connection connection, String email) throws SQLException;
     Set<Role> findRolesByUserId(Connection connection, UUID userId) throws SQLException;
     void save(Connection connection, User user) throws SQLException;
     void saveUserRoles(Connection connection, User user) throws SQLException;
