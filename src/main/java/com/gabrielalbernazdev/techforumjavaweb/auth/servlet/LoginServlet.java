@@ -3,6 +3,7 @@ package com.gabrielalbernazdev.techforumjavaweb.auth.servlet;
 import com.gabrielalbernazdev.techforumjavaweb.auth.service.AuthService;
 import com.gabrielalbernazdev.techforumjavaweb.config.component.AppComponent;
 import com.gabrielalbernazdev.techforumjavaweb.util.constant.Constants;
+import com.gabrielalbernazdev.techforumjavaweb.util.infra.ServletUtil;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -25,8 +26,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/login.jsp");
-        dispatcher.forward(req, resp);
+        ServletUtil.forward(req, resp, Constants.VIEWS_PATH + "/login.jsp");
     }
 
     @Override

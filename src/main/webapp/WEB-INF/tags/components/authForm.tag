@@ -30,7 +30,7 @@
                     </c:choose>
                 </p>
             </div>
-            <form class="py-2" hx-post="${action}">
+            <form class="py-2" hx-post="${action}" hx-validate="true">
                 <c:forEach items="${fields}" var="field">
                     <div class="form-group py-2">
                         <label for="${field.id}" class="form-label text-light">${field.label}</label>

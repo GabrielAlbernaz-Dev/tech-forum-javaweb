@@ -11,25 +11,33 @@ class Request {
     #initAfterRequest() {
         this.#bodyElement.addEventListener(this.#AFTER_REQUEST_EVENT, (event) => {
             const xhr = event.detail.xhr;
-            const errorType = xhr.getResponseHeader("x-error-type") ?? "";
-            const errorMessage = xhr.getResponseHeader("x-error-message") ?? "";
+            const { errorType, errorMessage } = this.#getErrorHeaders(xhr);
 
             if(errorType && errorMessage) {
-                let alertType = 'danger';
-                let alertMessage = '';
-
-                switch (errorType?.trim()?.toUpperCase()) {
-                    case 'VALIDATION':
-                        alertMessage = `A validation error occurred: ${errorMessage}. Please check the input and try again.`;
-                        break;
-                    default:
-                        alertMessage = `An unexpected error has occurred: ${errorMessage}. Please try again later.`;
-                        break;
-                }
-
+                const alertType = 'danger';
+                const alertMessage = this.#getValidationErrorMessage(xhr);
                 new Alert(alertMessage, alertType);
             }
         });
+    }
+
+    #getErrorHeaders(xhr) {
+        const errorType = xhr.getResponseHeader("x-error-type") ?? "";
+        const errorMessage = xhr.getResponseHeader("x-error-message") ?? "";
+        return { errorType, errorMessage };
+    }
+
+    #getValidationErrorMessage(xhr) {
+        const { errorType, errorMessage } = this.#getErrorHeaders(xhr);
+
+        console.log(99,errorType, errorMessage)
+
+        switch (errorType?.trim()?.toUpperCase()) {
+            case 'VALIDATION':
+                return `A validation error occurred: ${errorMessage}. Please check the input and try again.`;
+            default:
+                return `An unexpected error has occurred: ${errorMessage}. Please try again later.`;
+        }
     }
 }
 
