@@ -29,7 +29,6 @@ class Request {
 
     #getValidationErrorMessage(xhr) {
         const { errorType, errorMessage } = this.#getErrorHeaders(xhr);
-
         switch (errorType?.trim()?.toUpperCase()) {
             case 'VALIDATION':
                 return `A validation error occurred: ${errorMessage}. Please check the input and try again.`;
