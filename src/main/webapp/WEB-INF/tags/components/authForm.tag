@@ -15,14 +15,14 @@
                     <c:choose>
                         <c:when test="${externalLinkType eq 'register'}">
                             Don't have an account?
-                            <a href="${pageContext.request.contextPath}/auth/register"
+                            <a href="<c:out value="${applicationScope.ROUTES['register']}" />"
                                class="text-primary">
                                 Register here
                             </a>
                         </c:when>
                         <c:when test="${externalLinkType eq 'login'}">
                             Already have an account?
-                            <a href="${pageContext.request.contextPath}/auth/login"
+                            <a href="<c:out value="${applicationScope.ROUTES['login']}" />"
                                class="text-primary">
                                 Login here
                             </a>

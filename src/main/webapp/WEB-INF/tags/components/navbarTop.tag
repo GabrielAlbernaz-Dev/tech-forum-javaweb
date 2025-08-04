@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ tag description="Navbar Top Component" pageEncoding="UTF-8" %>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -24,16 +25,26 @@
                     <a class="nav-link" href="/"><i class="bi bi-star-fill text-warning"></i> Top</a>
                 </li>
             </ul>
-            <div class="btn-group flex-md-row flex-column" role="group">
-                <button type="button" class="btn text-light dropdown-toggle px-0 px-md-2" data-bs-toggle="dropdown" aria-expanded="false">
-                    UsernameRandomXX
-                </button>
+            <div class="btn-group flex-md-row flex-column" role="group" style="gap: 10px;">
+                <c:choose>
+                    <c:when test="${not empty sessionScope.user}">
+                        <button type="button" class="btn text-light dropdown-toggle px-0 px-md-2" data-bs-toggle="dropdown" aria-expanded="false">
+                            ${sessionScope.user.username}
+                        </button>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="d-flex flex-column flex-md-row" style="gap: 10px;">
+                            <a href="<c:out value="${applicationScope.ROUTES['login']}" />" class="btn btn-dark text-light">Login</a>
+                            <a href="<c:out value="${applicationScope.ROUTES['register']}" />" class="btn btn-primary text-light">Register</a>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
                 <ul class="dropdown-menu bg-dark">
                     <li><a class="dropdown-item bg-dark text-light" href="/"><i class="bi bi-person"></i>Profile Page</a></li>
                     <li><a class="dropdown-item" href="/"><i class="bi bi-sticky"></i>My Posts</a></li>
                     <li><a class="dropdown-item" href="/"><i class="bi bi-bell"></i>My Notifications</a></li>
                     <li><a class="dropdown-item" href="/"><i class="bi bi-hand-thumbs-up"></i>Likes Received</a></li>
-                    <li><a class="dropdown-item" href="/"><i class="bi bi-box-arrow-right"></i>Logout</a></li>
+                    <li><a class="dropdown-item" href="<c:out value="${applicationScope.ROUTES['logout']}" />"><i class="bi bi-box-arrow-right"></i>Logout</a></li>
                 </ul>
                 <button class="btn text-light px-0 px-md-2 d-flex d-md-inline-block">
                     <i class="bi bi-search"></i>

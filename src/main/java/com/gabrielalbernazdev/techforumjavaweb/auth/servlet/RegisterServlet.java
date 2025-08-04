@@ -7,6 +7,7 @@ import com.gabrielalbernazdev.techforumjavaweb.config.component.AppComponent;
 import com.gabrielalbernazdev.techforumjavaweb.user.domain.model.User;
 import com.gabrielalbernazdev.techforumjavaweb.user.dto.UserRequest;
 import com.gabrielalbernazdev.techforumjavaweb.util.constant.Constants;
+import com.gabrielalbernazdev.techforumjavaweb.util.constant.Routes;
 import com.gabrielalbernazdev.techforumjavaweb.util.infra.ServletUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -43,7 +44,7 @@ public class RegisterServlet extends HttpServlet {
         try {
             User registeredUser = authService.register(userRequest);
             req.getSession().setAttribute(Constants.USER_SESSION_ATTRIBUTE, registeredUser);
-            ServletUtil.redirect(req, resp, "/");
+            ServletUtil.redirect(req, resp, Routes.HOME);
         } catch (DomainException de) {
             resp.setStatus(HttpServletResponse.SC_UNPROCESSABLE_CONTENT);
             ServletUtil.setErrorHeader(resp, ErrorType.VALIDATION.toString(), de.getMessage());

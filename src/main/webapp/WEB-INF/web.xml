@@ -6,6 +6,9 @@
     <listener>
         <listener-class>com.gabrielalbernazdev.techforumjavaweb.config.initializer.DaggerInitializer</listener-class>
     </listener>
+    <listener>
+        <listener-class>com.gabrielalbernazdev.techforumjavaweb.config.initializer.ConstantsInitializer</listener-class>
+    </listener>
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>com.gabrielalbernazdev.techforumjavaweb.auth.filter.AuthFilter</filter-class>
@@ -37,5 +40,13 @@
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/auth/register</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>com.gabrielalbernazdev.techforumjavaweb.auth.servlet.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/auth/logout</url-pattern>
     </servlet-mapping>
 </web-app>

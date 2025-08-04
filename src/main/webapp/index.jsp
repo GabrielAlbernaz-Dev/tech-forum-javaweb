@@ -3,5 +3,5 @@
 <%@ taglib prefix="comp" tagdir="/WEB-INF/tags/components" %>
 
 <ui:baseLayout title="Tech Forum">
-    <h1>Home</h1>
+    <h2 class="text-light">Username: ${sessionScope.user.username}</h2>
 </ui:baseLayout>
