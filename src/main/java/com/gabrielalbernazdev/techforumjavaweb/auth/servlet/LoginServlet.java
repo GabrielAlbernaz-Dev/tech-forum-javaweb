@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
         try {
             User loggedUser = authService.login(userRequest);
             req.getSession().setAttribute(Constants.USER_SESSION_ATTRIBUTE, loggedUser);
-            ServletUtil.redirect(req, resp, Routes.HOME);
+            ServletUtil.redirect(req, resp, Routes.INDEX);
         } catch (DomainException de) {
             resp.setStatus(HttpServletResponse.SC_UNPROCESSABLE_CONTENT);
             ServletUtil.setErrorHeader(resp, ErrorType.VALIDATION.toString(), de.getMessage());

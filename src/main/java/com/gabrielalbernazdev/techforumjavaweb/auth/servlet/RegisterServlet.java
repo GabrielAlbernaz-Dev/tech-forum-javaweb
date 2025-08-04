@@ -44,7 +44,7 @@ public class RegisterServlet extends HttpServlet {
         try {
             User registeredUser = authService.register(userRequest);
             req.getSession().setAttribute(Constants.USER_SESSION_ATTRIBUTE, registeredUser);
-            ServletUtil.redirect(req, resp, Routes.HOME);
+            ServletUtil.redirect(req, resp, Routes.INDEX);
         } catch (DomainException de) {
             resp.setStatus(HttpServletResponse.SC_UNPROCESSABLE_CONTENT);
             ServletUtil.setErrorHeader(resp, ErrorType.VALIDATION.toString(), de.getMessage());
