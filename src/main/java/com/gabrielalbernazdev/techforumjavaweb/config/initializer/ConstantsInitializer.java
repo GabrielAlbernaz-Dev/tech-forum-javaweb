@@ -17,7 +17,7 @@ public class ConstantsInitializer implements ServletContextListener {
 
     private Map<String, String> getRoutes() {
         Map<String, String> routes = new HashMap<>();
-        routes.put("index", "/");
+        routes.put("index", Routes.INDEX);
         routes.put("login", Routes.LOGIN);
         routes.put("register", Routes.REGISTER);
         routes.put("logout", Routes.LOGOUT);
