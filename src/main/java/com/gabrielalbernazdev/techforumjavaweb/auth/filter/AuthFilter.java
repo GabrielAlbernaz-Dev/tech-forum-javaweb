@@ -8,15 +8,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Set;
 
 public class AuthFilter implements Filter {
     private static final String REDIRECT_PATH = "/auth/login";
-    private static final List<String> ALLOWED_PATHS = List.of(
+    private static final Set<String> ALLOWED_PATHS = Set.of(
             "/auth/",
             "/resources/"
     );
-    private static final List<String> ALLOWED_EXTENSIONS = List.of(
+    private static final Set<String> ALLOWED_EXTENSIONS = Set.of(
             ".css",
             ".js",
             ".png",

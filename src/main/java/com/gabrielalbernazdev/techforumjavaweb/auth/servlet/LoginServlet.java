@@ -8,11 +8,13 @@ import com.gabrielalbernazdev.techforumjavaweb.user.domain.model.User;
 import com.gabrielalbernazdev.techforumjavaweb.user.dto.UserRequest;
 import com.gabrielalbernazdev.techforumjavaweb.util.constant.Constants;
 import com.gabrielalbernazdev.techforumjavaweb.util.constant.Routes;
+import com.gabrielalbernazdev.techforumjavaweb.util.infra.CSRFTokenUtil;
 import com.gabrielalbernazdev.techforumjavaweb.util.infra.ServletUtil;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -43,7 +45,9 @@ public class LoginServlet extends HttpServlet {
 
         try {
             User loggedUser = authService.login(userRequest);
-            req.getSession().setAttribute(Constants.USER_SESSION_ATTRIBUTE, loggedUser);
+            HttpSession session = req.getSession(true);
+            session.setAttribute(Constants.USER_SESSION_ATTRIBUTE, loggedUser);
+            session.setAttribute(Constants.CSRF_TOKEN_ATTRIBUTE, CSRFTokenUtil.generateToken());
             ServletUtil.redirect(req, resp, Routes.INDEX);
         } catch (DomainException de) {
             resp.setStatus(HttpServletResponse.SC_UNPROCESSABLE_CONTENT);

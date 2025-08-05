@@ -12,6 +12,7 @@ public class ConstantsInitializer implements ServletContextListener {
     public void contextInitialized(jakarta.servlet.ServletContextEvent sce) {
         jakarta.servlet.ServletContext context = sce.getServletContext();
         context.setAttribute("USER_SESSION_ATTRIBUTE", Constants.USER_SESSION_ATTRIBUTE);
+        context.setAttribute("CSRF_TOKEN_ATTRIBUTE", Constants.CSRF_TOKEN_ATTRIBUTE);
         context.setAttribute("ROUTES", getRoutes());
     }
 
