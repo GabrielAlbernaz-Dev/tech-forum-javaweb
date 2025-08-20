@@ -3,5 +3,8 @@
 <%@ taglib prefix="comp" tagdir="/WEB-INF/tags/components" %>
 
 <ui:baseLayout title="Tech Forum">
-    <h2 class="text-light">Username: ${sessionScope.user.username}</h2>
+    <div class="d-flex flex-column flex-md-row justify-content-between" style="gap: 3.5rem">
+        <h1 class="text-light">TechForum Forums</h1>
+        <comp:cardListPost title="Latest Posts" />
+    </div>
 </ui:baseLayout>
