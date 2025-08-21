@@ -3,7 +3,8 @@ package com.gabrielalbernazdev.techforumjavaweb.util.database;
 public enum Table {
     USERS("users"),
     ROLES("roles"),
-    USER_ROLES("user_roles");
+    USER_ROLES("user_roles"),
+    POSTS("posts");
 
     private final String name;
 
